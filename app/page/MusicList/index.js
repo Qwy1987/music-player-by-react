@@ -3,5 +3,5 @@
  */
 import MusicList from './MusicList';
 
-export {MusicList};
+export default MusicList;
 

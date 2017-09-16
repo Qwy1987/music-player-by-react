@@ -4,7 +4,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 const PubSub = require('pubsub-js');
-import {Progress} from '../../components/Progress';
+import Progress from '../../components/Progress';
 import styles from './player.less';
 
 
@@ -36,6 +36,10 @@ class Player extends Component {
     }
 
     componentDidMount() {
+        //jPlayer提供的播放过程监听事件  $.jPlayer.event.timeupdate
+        //e.jPlayer.status.currentPercentAbsolute 当前播放的进度比例
+        //e.jPlayer.status.duration音频文件的总时长
+        //e.jPlayer.options.volume音量
         $("#player").bind($.jPlayer.event.timeupdate, (e) => {
             this.setState({
                 progress: Math.round(e.jPlayer.status.currentPercentAbsolute).toFixed(3),
@@ -80,16 +84,19 @@ class Player extends Component {
 
     //点击下一曲事件处理
     next() {
+        //发起播放下一曲
         PubSub.publish('PLAY_NEXT');
     }
 
     //点击上一曲事件处理
     prev() {
+        //发起播放上一曲
         PubSub.publish('PLAY_PREV');
     }
 
     //点击播放循环模式事件处理
     changeRepeat() {
+        //发起更改播放模式
         PubSub.publish('CHANAGE_REPEAT');
     }
 
@@ -120,13 +127,12 @@ class Player extends Component {
                             </div>
                         </div>
 
-                        <div style={{height: 10, lineHeight: '10px'}}>
+                        <div style={{height: 10, lineHeight: '10px',marginTop:'20px'}}>
                             <Progress
                                 progress={progress}
-                                onProgressChange={this.changeProgressHandler}
+                                onProgressChange={this.propgressChangeHandler}
                                 barColor='#2f9842'
-                            >
-                            </Progress>
+                            />
                         </div>
 
                         <div className="mt20 row">

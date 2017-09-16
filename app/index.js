@@ -1,26 +1,29 @@
 /**
  * Created by qwy on 2017/9/14.
  * webpack entry file
+ * 入口文件仅加载路由组件
  */
-// const React = require('react');  使用了babel可以用import导入文件
+// const React = require('react');
+// 使用了babel等es6转译工具可以用import导入文件
 import React, {Component}from 'react';
 import ReactDOM from 'react-dom';
+//提供热加载
 import {AppContainer} from 'react-hot-loader';
 
-import App from './App';
+import Routes from './Routes';
 
 ReactDOM.render(
     <AppContainer>
-        <App/>
+        <Routes/>
     </AppContainer>,
     document.getElementById('root')
 );
 if (module.hot) {
-    module.hot.accept('./App', () => {
-        const App = require('./App').default;
+    module.hot.accept('./Routes', () => {
+        const Routes = require('./Routes').default;
         ReactDOM.render(
             <AppContainer>
-                <App />
+                <Routes />
             </AppContainer>,
             document.getElementById('root')
         );
